@@ -1,4 +1,3 @@
-// CharacterDetails.jsx
 function CharacterDetails() {
   return <h1>Character Details Page</h1>;
 }
