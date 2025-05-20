@@ -1,4 +1,3 @@
-// Profile.jsx
 function Profile() {
   return <h1>Profile Page</h1>;
 }

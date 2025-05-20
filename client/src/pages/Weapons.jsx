@@ -1,4 +1,3 @@
-// Weapons.jsx
 function Weapons() {
   return <h1>Weapons Page</h1>;
 }
