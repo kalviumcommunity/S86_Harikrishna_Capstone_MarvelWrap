@@ -1,7 +1,6 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const Character = require('../models/Character');
-
+import Character from '../models/Character.js';
 router.get('/', async (req, res) => {
   try {
     const characters = await Character.find();
@@ -20,4 +19,4 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
