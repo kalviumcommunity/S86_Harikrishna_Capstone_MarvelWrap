@@ -1,16 +1,23 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
-dotenv.config(); // Load .env variables
+dotenv.config(); // Load environment variables from .env
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/marvelwrap');
+    // Access MONGO_URI from process.env
+    const mongoURI = process.env.MONGO_URI;
+
+    if (!mongoURI) {
+      throw new Error('MONGO_URI is not defined in environment variables');
+    }
+
+    await mongoose.connect(mongoURI);
 
     console.log('✅ MongoDB connected successfully');
   } catch (err) {
     console.error('❌ MongoDB connection failed:', err.message);
-    process.exit(1); // Exit process with failure
+    process.exit(1); // Exit with failure
   }
 };
 
