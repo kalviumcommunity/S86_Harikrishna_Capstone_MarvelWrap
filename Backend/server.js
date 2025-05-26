@@ -16,6 +16,7 @@ import searchRoutes from './routes/searchRoutes.js';
 import { authenticateUser } from './middleware/authMiddleware.js';
 
 dotenv.config();
+console.log("JWT_SECRET is:", process.env.JWT_SECRET);
 
 const app = express();
 app.use(express.json());
@@ -37,7 +38,7 @@ app.use('/api/chats', chatRoutes);
 
 // Routes requiring auth middleware
 // For example, users, teams, quiz results might need authentication
-app.use('/api/users', authenticateUser, userRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/teams', authenticateUser, teamRoutes);
 app.use('/api/quizresults', authenticateUser, quizResultRoutes);
 
