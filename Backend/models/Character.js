@@ -17,7 +17,7 @@ const characterSchema = new mongoose.Schema({
     required: true,
   },
   image: {
-    type: String, // URL of character image
+    type: String, 
     required: true,
   },
   movies: [{

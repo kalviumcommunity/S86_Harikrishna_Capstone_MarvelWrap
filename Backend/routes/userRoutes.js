@@ -5,7 +5,6 @@ import { authenticateUser, authorizeRoles } from '../middleware/authMiddleware.j
 
 const router = express.Router();
 
-// POST /signup - Register new user or admin (admin requires secret key)
 router.post('/signup', async (req, res) => {
   try {
     const {
@@ -50,7 +49,6 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// POST /login - Authenticate user and get token
 router.post('/login', async (req, res) => {
   try {
     const { shieldEmail, clearancePassword } = req.body;
@@ -85,7 +83,10 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// GET all users (admin only)
+router.post('/logout', authenticateUser, (req, res) => {
+  res.json({ message: 'Logged out successfully. Please delete your token on client side.' });
+});
+
 router.get('/', authenticateUser, authorizeRoles('admin'), async (req, res) => {
   try {
     const query = {};
@@ -108,7 +109,6 @@ router.get('/', authenticateUser, authorizeRoles('admin'), async (req, res) => {
   }
 });
 
-// GET user by ID (authenticated users)
 router.get('/:id', authenticateUser, async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
@@ -123,33 +123,29 @@ router.get('/:id', authenticateUser, async (req, res) => {
   }
 });
 
-// PUT /api/users/:id - Update user details (must be authenticated)
 router.put('/:id', authenticateUser, async (req, res) => {
   try {
     const userId = req.params.id;
-    const requesterId = req.user.id; // set by authenticateUser middleware
+    const requesterId = req.user.id; 
     const requesterRole = req.user.role;
 
-    // Allow update only if user is admin or updating own profile
     if (requesterRole !== 'admin' && requesterId !== userId) {
       return res.status(403).json({ error: 'Unauthorized to update this user' });
     }
 
     const updates = { ...req.body };
 
-    // If clearancePassword is provided, hash it before saving
     if (updates.clearancePassword) {
       const bcrypt = await import('bcryptjs');
       const salt = await bcrypt.genSalt(10);
       updates.clearancePassword = await bcrypt.hash(updates.clearancePassword, salt);
     }
 
-    // Find user by ID and update
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { $set: updates },
       { new: true, runValidators: true }
-    ).select('-clearancePassword'); // exclude password in response
+    ).select('-clearancePassword');
 
     if (!updatedUser) return res.status(404).json({ error: 'User not found' });
 

@@ -1,0 +1,37 @@
+meta {
+  name: Fury
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:5000/api/characters
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzVhYWJhNzc3YzljYjJmZGRmZjRiMiIsImlhdCI6MTc0ODM0NzYzMywiZXhwIjoxNzQ4NDM0MDMzfQ.Z2VAjDPV2GdIjpHDE2Ia4lQ4sjh4jWdCzeUXA8fs9C8
+}
+
+body:json {
+  {
+    "teamAName": "Ironman",
+    "teamBName": "Captain",
+    "teamAIds": [
+      "6835b0c5777c9cb2fddff4bc",
+      "6835b0c5777c9cb2fddff4bd",
+      "6835b0c5777c9cb2fddff4be",
+      "6835b0c5777c9cb2fddff4bf",
+      "6835b0c5777c9cb2fddff4c0"
+    ],
+    "teamBIds": [
+      "6835b27c777c9cb2fddff4c1",
+      "6835b27c777c9cb2fddff4c2",
+      "6835b27c777c9cb2fddff4c3",
+      "6835b27c777c9cb2fddff4c4",
+      "6835b27c777c9cb2fddff4c5"
+    ]
+  }
+  
+}

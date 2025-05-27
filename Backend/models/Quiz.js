@@ -1,30 +1,41 @@
 import mongoose from 'mongoose';
 
-const quizSchema = new mongoose.Schema({
-  question: {
+const questionSchema = new mongoose.Schema({
+  questionText: {
     type: String,
-    required: true
+    default: "",
+  },
+  image: {
+    type: String,
+    default: "", 
   },
   options: {
     type: [String],
     required: true,
-    validate: [arrayLimit, 'A quiz must have exactly 4 options']
+    validate: v => v.length === 4,
   },
   correctAnswerIndex: {
     type: Number,
     required: true,
     min: 0,
-    max: 3
+    max: 3,
+  },
+}, { _id: false });
+
+const quizSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
-  }
+    required: true,
+  },
+  questions: {
+    type: [questionSchema],
+    validate: v => v.length === 5,
+  },
 }, { timestamps: true });
-
-function arrayLimit(val) {
-  return val.length === 4;
-}
 
 export default mongoose.model('Quiz', quizSchema);

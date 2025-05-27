@@ -29,10 +29,10 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ['user', 'admin'],
+    default: 'user'
   }
 }, { timestamps: true });
 
-// Pre-save middleware to hash password if modified or new
 userSchema.pre('save', async function(next) {
   if (!this.isModified('clearancePassword')) {
     return next();
@@ -47,12 +47,10 @@ userSchema.pre('save', async function(next) {
   }
 });
 
-// Instance method to compare password during login
 userSchema.methods.comparePassword = async function(candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.clearancePassword);
 };
 
-// Check if model exists, else create it
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 export default User;
