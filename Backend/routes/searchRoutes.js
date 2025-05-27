@@ -1,18 +1,22 @@
 import express from "express";
 import Character from "../models/Character.js";
-import Movie from "../models/movie.js";
+import Movie from "../models/movie.js"
 import Comic from "../models/comic.js";
 import Weapon from "../models/weapon.js";
-import User from "../models/user.js";
-import Team from "../models/team.js";
-import Quiz from "../models/quiz.js";
+import User from "../models/User.js";
 
 const router = express.Router();
 
 router.get("/characters", async (req, res) => {
   try {
+    const searchTerm = req.query.search || "";
+    const regex = new RegExp(searchTerm, "i");
     const characters = await Character.find({
-      name: new RegExp(req.query.name || "", "i"),
+      $or: [
+        { name: regex },
+        { alias: regex },
+        { description: regex }
+      ]
     }).populate("movies comics weapons");
     res.json(characters);
   } catch (err) {
@@ -22,8 +26,14 @@ router.get("/characters", async (req, res) => {
 
 router.get("/movies", async (req, res) => {
   try {
+    const searchTerm = req.query.search || "";
+    const regex = new RegExp(searchTerm, "i");
     const movies = await Movie.find({
-      title: new RegExp(req.query.title || "", "i"),
+      $or: [
+        { title: regex },
+        { director: regex },
+        { genre: regex }
+      ]
     }).populate("characters");
     res.json(movies);
   } catch {
@@ -33,8 +43,13 @@ router.get("/movies", async (req, res) => {
 
 router.get("/comics", async (req, res) => {
   try {
+    const searchTerm = req.query.search || "";
+    const regex = new RegExp(searchTerm, "i");
     const comics = await Comic.find({
-      title: new RegExp(req.query.title || "", "i"),
+      $or: [
+        { title: regex },
+        { description: regex }
+      ]
     }).populate("characters");
     res.json(comics);
   } catch {
@@ -44,8 +59,13 @@ router.get("/comics", async (req, res) => {
 
 router.get("/weapons", async (req, res) => {
   try {
+    const searchTerm = req.query.search || "";
+    const regex = new RegExp(searchTerm, "i");
     const weapons = await Weapon.find({
-      name: new RegExp(req.query.name || "", "i"),
+      $or: [
+        { name: regex },
+        { type: regex }
+      ]
     }).populate("wielder");
     res.json(weapons);
   } catch {
@@ -55,34 +75,17 @@ router.get("/weapons", async (req, res) => {
 
 router.get("/users", async (req, res) => {
   try {
+    const searchTerm = req.query.search || "";
+    const regex = new RegExp(searchTerm, "i");
     const users = await User.find({
-      agentName: new RegExp(req.query.agentName || "", "i"),
+      $or: [
+        { agentName: regex },
+        { email: regex }
+      ]
     }).populate("favoriteAvenger");
     res.json(users);
   } catch {
     res.status(500).json({ error: "Error fetching users" });
-  }
-});
-
-router.get("/teams", async (req, res) => {
-  try {
-    const teams = await Team.find({
-      name: new RegExp(req.query.name || "", "i"),
-    }).populate("members");
-    res.json(teams);
-  } catch {
-    res.status(500).json({ error: "Error fetching teams" });
-  }
-});
-
-router.get("/quizzes", async (req, res) => {
-  try {
-    const quizzes = await Quiz.find({
-      question: new RegExp(req.query.question || "", "i"),
-    });
-    res.json(quizzes);
-  } catch {
-    res.status(500).json({ error: "Error fetching quizzes" });
   }
 });
 

@@ -18,7 +18,7 @@ const movieSchema = new mongoose.Schema({
     required: true
   },
   poster: {
-    type: String, // URL to image
+    type: String,
     required: true
   },
   createdBy: {
@@ -28,4 +28,6 @@ const movieSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-export default mongoose.model('Movie', movieSchema);
+const Movie = mongoose.models.Movie || mongoose.model('Movie', movieSchema);
+
+export default Movie;

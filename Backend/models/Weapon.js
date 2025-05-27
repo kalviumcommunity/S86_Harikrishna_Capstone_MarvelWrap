@@ -19,9 +19,11 @@ const weaponSchema = new mongoose.Schema({
     required: true
   },
   image: {
-    type: String, // URL to image
+    type: String, 
     required: true
   }
 }, { timestamps: true });
 
-export default mongoose.model('Weapon', weaponSchema);
+const Weapon = mongoose.models.Weapon || mongoose.model('Weapon', weaponSchema);
+
+export default Weapon;

@@ -12,9 +12,13 @@ const favoriteSchema = new mongoose.Schema({
   },
   itemType: {
     type: String,
-    enum: ['Character', 'Movie', 'Weapon'],
+    enum: ['Character', 'Movie', 'Weapon', 'Comic'],
     required: true
   }
-}, { timestamps: true });
+}, {
+  timestamps: true
+});
+
+favoriteSchema.index({ user: 1, itemId: 1, itemType: 1 }, { unique: true });
 
 export default mongoose.model('Favorite', favoriteSchema);

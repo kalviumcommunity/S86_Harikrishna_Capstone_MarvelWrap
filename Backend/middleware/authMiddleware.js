@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
-// ✅ Middleware to protect routes and extract user from JWT token
 const authenticateUser = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
@@ -11,21 +10,30 @@ const authenticateUser = async (req, res, next) => {
     }
 
     const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (error) {
+      if (error.name === 'TokenExpiredError') {
+        return res.status(401).json({ error: 'Token expired, please login again' });
+      }
+      return res.status(401).json({ error: 'Unauthorized: Invalid token' });
+    }
 
     const user = await User.findById(decoded.id).select('-clearancePassword');
     if (!user) {
       return res.status(401).json({ error: 'User not found' });
     }
 
-    req.user = user; // Attach user info to request
+    req.user = user;
     next();
   } catch (error) {
-    return res.status(401).json({ error: 'Unauthorized: Invalid token' });
+    console.error('Auth middleware error:', error);
+    return res.status(500).json({ error: 'Server error during authentication' });
   }
 };
 
-// ✅ Role-based access control middleware
 const authorizeRoles = (...roles) => (req, res, next) => {
   if (!roles.includes(req.user.role)) {
     return res.status(403).json({ error: 'Access forbidden: Insufficient permissions' });
@@ -33,9 +41,8 @@ const authorizeRoles = (...roles) => (req, res, next) => {
   next();
 };
 
-// ✅ Named exports
-const verifyToken = authenticateUser;        // Alias for compatibility
-const verifyAdmin = authorizeRoles('admin'); // For admin-only routes
+const verifyToken = authenticateUser;
+const verifyAdmin = authorizeRoles('admin'); 
 
 export {
   authenticateUser,

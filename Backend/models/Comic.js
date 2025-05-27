@@ -32,4 +32,6 @@ const comicSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-export default mongoose.model('Comic', comicSchema);
+const Comic = mongoose.models.Comic || mongoose.model('Comic', comicSchema);
+
+export default Comic;
