@@ -13,6 +13,7 @@ import quizRoutes from './routes/quizRoutes.js';
 import chatRoutes from './routes/chatRoutes.js';
 import searchRoutes from './routes/searchRoutes.js';
 import favoriteRoutes from './routes/favoriteRoutes.js'
+import statsRoutes from './routes/statsRoutes.js'
 
 import { authenticateUser } from './middleware/authMiddleware.js';
 
@@ -38,6 +39,7 @@ app.use('/api/quizzes', quizRoutes);
 app.use('/api/chats', chatRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/favorites', favoriteRoutes);
+app.use('/api/stats', statsRoutes);
 
 app.use('/api/battles', authenticateUser, battleRoutes);
 

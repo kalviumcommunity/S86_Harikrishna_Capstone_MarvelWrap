@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: http://localhost:5000/api/characters
+  url: http://localhost:5000/api/stats
   body: none
   auth: bearer
 }
@@ -16,22 +16,19 @@ auth:bearer {
 
 body:json {
   {
-    "teamAName": "Ironman",
-    "teamBName": "Captain",
-    "teamAIds": [
-      "6835b0c5777c9cb2fddff4bc",
-      "6835b0c5777c9cb2fddff4bd",
-      "6835b0c5777c9cb2fddff4be",
-      "6835b0c5777c9cb2fddff4bf",
-      "6835b0c5777c9cb2fddff4c0"
+    "name": "Iron Man",
+    "alias": "Tony Stark",
+    "powers": [
+      "Genius-level intellect",
+      "Powered armor suit",
+      "Flight",
+      "Energy repulsors"
     ],
-    "teamBIds": [
-      "6835b27c777c9cb2fddff4c1",
-      "6835b27c777c9cb2fddff4c2",
-      "6835b27c777c9cb2fddff4c3",
-      "6835b27c777c9cb2fddff4c4",
-      "6835b27c777c9cb2fddff4c5"
-    ]
+    "description": "Iron Man, aka Tony Stark, is a billionaire inventor who uses his advanced powered armor to fight evil and protect the world.",
+    "image": "https://upload.wikimedia.org/wikipedia/en/e/e0/Iron_Man_bleeding_edge.jpg",
+    "movies": ["6835c210777c9cb2fddff4e1"],
+    "comics": ["6835c4e7777c9cb2fddff4f8"],
+    "weapons": ["6835bb77777c9cb2fddff4d2"]
   }
   
 }
