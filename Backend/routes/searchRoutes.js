@@ -1,8 +1,8 @@
 import express from "express";
 import Character from "../models/Character.js";
-import Movie from "../models/movie.js"
-import Comic from "../models/comic.js";
-import Weapon from "../models/weapon.js";
+import Movie from "../models/Movie.js"
+import Comic from "../models/Comic.js";
+import Weapon from "../models/Weapon.js";
 import User from "../models/User.js";
 
 const router = express.Router();

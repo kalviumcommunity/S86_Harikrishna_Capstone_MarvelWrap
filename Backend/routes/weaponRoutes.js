@@ -1,5 +1,5 @@
 import express from "express";
-import Weapon from "../models/weapon.js";
+import Weapon from "../models/Weapon.js";
 import { verifyToken, verifyAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();

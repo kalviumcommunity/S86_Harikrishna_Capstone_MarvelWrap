@@ -1,5 +1,5 @@
 import express from "express";
-import Comic from "../models/comic.js";
+import Comic from "../models/Comic.js";
 import { verifyToken, verifyAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
