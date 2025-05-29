@@ -1,6 +1,6 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import Chatbox from "../models/chatbox.js";
+import Chatbox from "../models/Chatbox.js";
 import { verifyToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();

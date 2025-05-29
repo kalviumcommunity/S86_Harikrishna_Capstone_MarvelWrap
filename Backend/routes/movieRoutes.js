@@ -1,5 +1,5 @@
 import express from "express";
-import Movie from "../models/movie.js";
+import Movie from "../models/Movie.js";
 import { verifyToken, verifyAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
