@@ -27,7 +27,8 @@ const userSchema = new mongoose.Schema(
       minlength: [6, "Password must be at least 6 characters"],
     },
     favoriteAvenger: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"Character",
       default: null,
     },
     role: {
@@ -39,7 +40,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Hash the password before saving
 userSchema.pre("save", async function (next) {
   if (!this.isModified("clearancePassword")) return next();
 
@@ -52,7 +52,6 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-// Compare input password with hashed password
 userSchema.methods.comparePassword = async function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.clearancePassword);
 };

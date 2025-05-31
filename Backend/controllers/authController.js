@@ -1,14 +1,34 @@
 import User from '../models/User.js';
+import Character from '../models/Character.js';
 import mongoose from 'mongoose';
 import generateToken from '../utils/generateToken.js';
 
 const signupUser = async (req, res) => {
   try {
-    const { agentName, agentCodeName, shieldEmail, clearancePassword, favoriteAvenger } = req.body;
+    const {
+      agentName,
+      agentCodeName,
+      shieldEmail,
+      clearancePassword,
+      favoriteAvenger,
+      role,        
+      adminSecret    
+    } = req.body;
 
-    // Validate favoriteAvenger ObjectId
-    if (!mongoose.Types.ObjectId.isValid(favoriteAvenger)) {
-      return res.status(400).json({ error: 'Invalid favoriteAvenger ID' });
+    let userRole = 'user';
+    if (adminSecret && adminSecret === process.env.ADMIN_SECRET_KEY) {
+      userRole = 'admin';
+    }
+
+    if (userRole !== 'admin') {`  `
+      if (!favoriteAvenger || !mongoose.Types.ObjectId.isValid(favoriteAvenger)) {
+        return res.status(400).json({ error: 'Invalid or missing favoriteAvenger ID' });
+      }
+
+      const characterExists = await Character.findById(favoriteAvenger);
+      if (!characterExists) {
+        return res.status(400).json({ error: 'Favorite Avenger character does not exist' });
+      }
     }
 
     const userExists = await User.findOne({ shieldEmail });
@@ -21,7 +41,8 @@ const signupUser = async (req, res) => {
       agentCodeName,
       shieldEmail,
       clearancePassword,
-      favoriteAvenger
+      favoriteAvenger: userRole === 'admin' ? undefined : favoriteAvenger,
+      role: userRole
     });
 
     if (user) {
