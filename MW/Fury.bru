@@ -4,31 +4,32 @@ meta {
   seq: 2
 }
 
-get {
-  url: http://localhost:5000/api/characters
-  body: none
+put {
+  url: http://localhost:5000/api/characters/683aca844dc01b79a434d0a4
+  body: json
   auth: bearer
 }
 
 auth:bearer {
-  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzVhYWJhNzc3YzljYjJmZGRmZjRiMiIsImlhdCI6MTc0ODM0NzYzMywiZXhwIjoxNzQ4NDM0MDMzfQ.Z2VAjDPV2GdIjpHDE2Ia4lQ4sjh4jWdCzeUXA8fs9C8
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4M2FiNzAwZTdmMTRjMWQ3YTI3M2QxMiIsImlhdCI6MTc0ODY3ODQwMCwiZXhwIjoxNzUxMjcwNDAwfQ.4Pokl6T3SN0x6MUSuMv8cG_CLdv29rse__JkgLR5O90
 }
 
 body:json {
   {
-    "name": "Iron Man",
-    "alias": "Tony Stark",
+    "name": "Stephen Strange",
+    "alias": "Doctor Strange",
     "powers": [
-      "Genius-level intellect",
-      "Powered armor suit",
-      "Flight",
-      "Energy repulsors"
+      "Mastery of the Mystic Arts",
+      "Time Manipulation",
+      "Astral Projection",
+      "Dimensional Travel"
     ],
-    "description": "Iron Man, aka Tony Stark, is a billionaire inventor who uses his advanced powered armor to fight evil and protect the world.",
-    "image": "https://upload.wikimedia.org/wikipedia/en/e/e0/Iron_Man_bleeding_edge.jpg",
-    "movies": ["6835c210777c9cb2fddff4e1"],
-    "comics": ["6835c4e7777c9cb2fddff4f8"],
-    "weapons": ["6835bb77777c9cb2fddff4d2"]
+    "description": "Once a brilliant but arrogant neurosurgeon, Stephen Strange becomes the Sorcerer Supreme after a tragic accident leads him to the mystical arts.",
+    "image": "https://example.com/images/doctorstrange.jpg",
+    "movies": [],
+    "comics": [],
+    "weapons": [],
+    "createdBy": "683ab700e7f14c1d7a273d12"
   }
   
 }
