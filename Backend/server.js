@@ -3,6 +3,9 @@ import connectDB from "./config/db.js";
 import dotenv from "dotenv";
 import cors from "cors";
 
+import passport from "passport";
+import "./config/googleauth.js";
+
 import characterRoutes from "./routes/characterRoutes.js";
 import movieRoutes from "./routes/movieRoutes.js";
 import comicRoutes from "./routes/comicRoutes.js";
@@ -27,11 +30,19 @@ app.use(express.json());
 
 connectDB();
 
+// Initialize passport middleware
+app.use(passport.initialize());
+
 app.get("/", (req, res) => {
   res.send("MarvelWrap backend running");
 });
 
+// Use your existing auth routes
 app.use("/api/auth", authRoutes);
+
+// Add Google OAuth routes (import the router)
+import googleAuthRoutes from "./routes/googleRoutes.js";  // <-- Add this new import
+app.use("/api/auth", googleAuthRoutes);             // <-- Add this new route
 
 app.use("/api/users", userRoutes);
 app.use("/api/battles", authenticateUser, battleRoutes);

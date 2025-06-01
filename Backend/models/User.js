@@ -5,8 +5,10 @@ const userSchema = new mongoose.Schema(
   {
     agentName: {
       type: String,
-      required: [true, "Agent name is required"],
       trim: true,
+      required: function () {
+        return !this.isGoogleUser;
+      },
     },
     agentCodeName: {
       type: String,
@@ -23,12 +25,14 @@ const userSchema = new mongoose.Schema(
     },
     clearancePassword: {
       type: String,
-      required: [true, "Password is required"],
+      required: function () {
+        return !this.isGoogleUser;
+      },
       minlength: [6, "Password must be at least 6 characters"],
     },
     favoriteAvenger: {
       type: mongoose.Schema.Types.ObjectId,
-      ref:"Character",
+      ref: "Character",
       default: null,
     },
     role: {
@@ -36,12 +40,24 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    isGoogleUser: {
+      type: Boolean,
+      default: false,
+    },
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
+    avatar: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
 
 userSchema.pre("save", async function (next) {
-  if (!this.isModified("clearancePassword")) return next();
+  if (!this.isModified("clearancePassword") || this.isGoogleUser) return next();
 
   try {
     const salt = await bcrypt.genSalt(10);
