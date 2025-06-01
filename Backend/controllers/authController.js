@@ -11,8 +11,8 @@ const signupUser = async (req, res) => {
       shieldEmail,
       clearancePassword,
       favoriteAvenger,
-      role,        
-      adminSecret    
+      role,
+      adminSecret,
     } = req.body;
 
     let userRole = 'user';
@@ -20,7 +20,7 @@ const signupUser = async (req, res) => {
       userRole = 'admin';
     }
 
-    if (userRole !== 'admin') {`  `
+    if (userRole !== 'admin') {
       if (!favoriteAvenger || !mongoose.Types.ObjectId.isValid(favoriteAvenger)) {
         return res.status(400).json({ error: 'Invalid or missing favoriteAvenger ID' });
       }
@@ -42,7 +42,7 @@ const signupUser = async (req, res) => {
       shieldEmail,
       clearancePassword,
       favoriteAvenger: userRole === 'admin' ? undefined : favoriteAvenger,
-      role: userRole
+      role: userRole,
     });
 
     if (user) {
@@ -51,7 +51,7 @@ const signupUser = async (req, res) => {
         agentName: user.agentName,
         shieldEmail: user.shieldEmail,
         role: user.role,
-        token: generateToken(user._id)
+        token: generateToken(user._id),
       });
     } else {
       res.status(400).json({ error: 'Invalid user data' });
@@ -65,6 +65,10 @@ const signupUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { shieldEmail, clearancePassword } = req.body;
+
+    if (!shieldEmail || !clearancePassword) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
 
     const user = await User.findOne({ shieldEmail });
     if (!user) {
@@ -81,7 +85,7 @@ const loginUser = async (req, res) => {
       agentName: user.agentName,
       shieldEmail: user.shieldEmail,
       role: user.role,
-      token: generateToken(user._id)
+      token: generateToken(user._id),
     });
   } catch (error) {
     console.error('Login User Error:', error);
@@ -89,4 +93,4 @@ const loginUser = async (req, res) => {
   }
 };
 
-export { signupUser, loginUser };
+export { signupUser, loginUser }; 
