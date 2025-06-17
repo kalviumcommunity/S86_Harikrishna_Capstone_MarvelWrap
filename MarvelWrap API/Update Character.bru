@@ -1,0 +1,21 @@
+meta {
+  name: Update Character
+  type: http
+  seq: 32
+}
+
+put {
+  url: http://localhost:5000/api/characters/683ab888e7f14c1d7a273d16
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4M2U4Mzc2MzdmODYwNTdiNzJkMGVlNyIsImlhdCI6MTc1MDEzMjQ3OSwiZXhwIjoxNzUyNzI0NDc5fQ.ySECb0ZIsA0R0kGg-2HkHJ6G67XvNBfhSiq9Zr9mwfM
+}
+
+body:json {
+  {
+    "description": "a highly skilled martial artist, proficient in various fighting styles, making her a formidable hand-to-hand combatant"
+  }
+}

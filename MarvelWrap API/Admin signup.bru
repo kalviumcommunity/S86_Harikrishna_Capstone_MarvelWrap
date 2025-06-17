@@ -1,0 +1,22 @@
+meta {
+  name: Admin signup
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:5000/api/auth/signup
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "agentName": "Nick Fury",
+    "agentCodeName": "DirectorFury",
+    "shieldEmail": "nick.fury@shield.marvel",
+    "clearancePassword": "SuperSecure123!",
+    "adminSecret": "admin123"
+  }
+  
+}

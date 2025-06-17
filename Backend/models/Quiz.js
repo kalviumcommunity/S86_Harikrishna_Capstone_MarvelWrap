@@ -1,41 +1,16 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const questionSchema = new mongoose.Schema({
-  questionText: {
+  category: {
     type: String,
-    default: "",
-  },
-  image: {
-    type: String,
-    default: "", 
-  },
-  options: {
-    type: [String],
-    required: true,
-    validate: v => v.length === 4,
-  },
-  correctAnswerIndex: {
-    type: Number,
-    required: true,
-    min: 0,
-    max: 3,
-  },
-}, { _id: false });
-
-const quizSchema = new mongoose.Schema({
-  title: {
-    type: String,
+    enum: ["marvel", "weapons", "characters", "movies", "comics"],
     required: true,
   },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  questions: {
-    type: [questionSchema],
-    validate: v => v.length === 5,
-  },
+  questionText: String,
+  image: String,
+  options: [String],
+  correctAnswerIndex: Number,
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 }, { timestamps: true });
 
-export default mongoose.model('Quiz', quizSchema);
+export default mongoose.model("Question", questionSchema);

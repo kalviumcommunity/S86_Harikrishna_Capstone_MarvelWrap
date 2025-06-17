@@ -31,10 +31,11 @@ export const getCharacterById = async (req, res) => {
 
 export const createCharacter = async (req, res) => {
   try {
-    const newCharacter = new Character(req.body);
-    const saved = await newCharacter.save();
+    const character = new Character({ ...req.body, createdBy: req.user._id });
+    const saved = await character.save();
     res.status(201).json(saved);
   } catch (err) {
+    console.error("Character Creation Error:", err);
     res.status(400).json({ error: "Failed to create character" });
   }
 };

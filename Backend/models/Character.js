@@ -1,5 +1,10 @@
 import mongoose from 'mongoose';
 
+const allowedRoles = [
+  'Leader', 'Tactician', 'Tank', 'Brawler', 'Sorcerer',
+  'TechGenius', 'Assassin', 'Speedster', 'Sniper', 'Support'
+];
+
 const characterSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -19,6 +24,11 @@ const characterSchema = new mongoose.Schema({
   image: {
     type: String, 
     required: true,
+  },
+  roles: {
+    type: [String],
+    enum: allowedRoles,
+    validate: [roles => roles.length <= 3, 'Max 3 roles allowed']
   },
   movies: [{
     type: mongoose.Schema.Types.ObjectId,

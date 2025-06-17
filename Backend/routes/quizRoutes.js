@@ -1,17 +1,11 @@
 import express from "express";
-import { authenticateUser } from "../middleware/authMiddleware.js";
-import {
-  createQuiz,
-  getAllQuizzes,
-  getQuizById,
-  submitQuiz
-} from "../controllers/quizController.js";
+import { addQuestion, getRandomQuestions, submitQuiz } from "../controllers/quizController.js";
+import { authenticateUser } from "../middleware/authMiddleware.js"; 
 
 const router = express.Router();
 
-router.post("/", authenticateUser, createQuiz);
-router.get("/", getAllQuizzes);
-router.get("/:id", getQuizById);
-router.post("/:id/submit", authenticateUser, submitQuiz);
+router.post("/add", authenticateUser, addQuestion);
+router.get("/random/:category", getRandomQuestions);
+router.post("/submit", submitQuiz);
 
 export default router;

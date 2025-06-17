@@ -1,0 +1,23 @@
+meta {
+  name: Add Favorites
+  type: http
+  seq: 33
+}
+
+post {
+  url: http://localhost:5000/api/favorites
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4M2U4Mzc2MzdmODYwNTdiNzJkMGVlNyIsImlhdCI6MTc1MDEzMjQ3OSwiZXhwIjoxNzUyNzI0NDc5fQ.ySECb0ZIsA0R0kGg-2HkHJ6G67XvNBfhSiq9Zr9mwfM
+}
+
+body:json {
+  {
+    "itemId": "683ab888e7f14c1d7a273d16",
+    "itemType": "Character"
+  }
+  
+}

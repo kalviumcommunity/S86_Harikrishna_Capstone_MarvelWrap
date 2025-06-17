@@ -7,4 +7,4 @@ const router = express.Router();
 router.post('/', authenticateUser, createBattle);
 router.get('/', authenticateUser, getBattles);
 
-export default router; 
+export default router;

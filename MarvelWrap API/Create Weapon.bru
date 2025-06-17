@@ -1,0 +1,26 @@
+meta {
+  name: Create Weapon
+  type: http
+  seq: 21
+}
+
+post {
+  url: http://localhost:5000/api/weapons
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4M2U4Mzc2MzdmODYwNTdiNzJkMGVlNyIsImlhdCI6MTc1MDEzMjQ3OSwiZXhwIjoxNzUyNzI0NDc5fQ.ySECb0ZIsA0R0kGg-2HkHJ6G67XvNBfhSiq9Zr9mwfM
+}
+
+body:json {
+  {
+    "name": "Stormbreaker",
+    "type": "Axe",
+    "wielder": "665cba2b5a7e59b3ae897a02",
+    "description": "Forged in Nidavellir, wielded by Thor.",
+    "image": "https://example.com/images/stormbreaker.jpg"
+  }
+  
+}
