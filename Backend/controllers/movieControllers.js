@@ -11,7 +11,7 @@ export const getAllMovies = async (req, res) => {
     res.json(movies);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to get movies" });
+    res.status(500).json({ error: "Failed to get movies" }); 
   }
 };
 

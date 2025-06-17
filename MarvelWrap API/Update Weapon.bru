@@ -1,0 +1,22 @@
+meta {
+  name: Update Weapon
+  type: http
+  seq: 24
+}
+
+put {
+  url: http://localhost:5000/api/weapons/68511f6ed62ebe7dd5914c42
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4M2U4Mzc2MzdmODYwNTdiNzJkMGVlNyIsImlhdCI6MTc1MDEzMjQ3OSwiZXhwIjoxNzUyNzI0NDc5fQ.ySECb0ZIsA0R0kGg-2HkHJ6G67XvNBfhSiq9Zr9mwfM
+}
+
+body:json {
+  {
+    "description": "an enchanted axe forged by the dwarves of Nidavellir for Thor"
+  }
+  
+}

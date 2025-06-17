@@ -1,0 +1,25 @@
+meta {
+  name: Add Quiz Question
+  type: http
+  seq: 18
+}
+
+post {
+  url: http://localhost:5000/api/quiz/add
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4M2U4Mzc2MzdmODYwNTdiNzJkMGVlNyIsImlhdCI6MTc1MDEzMjQ3OSwiZXhwIjoxNzUyNzI0NDc5fQ.ySECb0ZIsA0R0kGg-2HkHJ6G67XvNBfhSiq9Zr9mwfM
+}
+
+body:json {
+  {
+    "category": "marvel",
+    "questionText": "Who is Iron Man?",
+    "image": "",
+    "options": ["Steve", "Tony", "Bruce", "Peter"],
+    "correctAnswerIndex": 1
+  }
+}

@@ -1,0 +1,27 @@
+meta {
+  name: Create Comic
+  type: http
+  seq: 14
+}
+
+post {
+  url: http://localhost:5000/api/comics
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4M2U4Mzc2MzdmODYwNTdiNzJkMGVlNyIsImlhdCI6MTc1MDEzMjQ3OSwiZXhwIjoxNzUyNzI0NDc5fQ.ySECb0ZIsA0R0kGg-2HkHJ6G67XvNBfhSiq9Zr9mwfM
+}
+
+body:json {
+  {
+    "title": "Infinity War",
+    "issueNumber": 1,
+    "releaseDate": "2018-04-25",
+    "characters": ["665cba2b5a7e59b3ae897a02", "665cba8c5a7e59b3ae897a03"],
+    "description": "Thanos arrives with the Infinity Gauntlet.",
+    "coverImage": "https://example.com/images/iw.jpg"
+  }
+  
+}

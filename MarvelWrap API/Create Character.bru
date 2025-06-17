@@ -1,0 +1,41 @@
+meta {
+  name: Create Character
+  type: http
+  seq: 29
+}
+
+post {
+  url: http://localhost:5000/api/characters
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4M2U4Mzc2MzdmODYwNTdiNzJkMGVlNyIsImlhdCI6MTc1MDEzMjQ3OSwiZXhwIjoxNzUyNzI0NDc5fQ.ySECb0ZIsA0R0kGg-2HkHJ6G67XvNBfhSiq9Zr9mwfM
+}
+
+body:json {
+  {
+    "name": "Scarlet Witch",
+    "alias": "Wanda Maximoff",
+    "powers": [
+      "Reality Manipulation",
+      "Telekinesis"
+    ],
+    "description": "Wanda is one of the most powerful Avengers.",
+    "image": "https://example.com/wanda.jpg",
+    "roles": [
+      "Sorcerer",
+      "Support"
+    ],
+    "movies": [
+      "665cba2b5a7e59b3ae897a02"
+    ],
+    "comics": [
+      "665cba8c5a7e59b3ae897a03"
+    ],
+    "weapons": [
+      "665cba9f5a7e59b3ae897a04"
+    ]
+  }
+}

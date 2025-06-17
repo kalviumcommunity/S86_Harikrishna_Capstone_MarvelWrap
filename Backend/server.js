@@ -30,23 +30,20 @@ app.use(express.json());
 
 connectDB();
 
-// Initialize passport middleware
 app.use(passport.initialize());
 
 app.get("/", (req, res) => {
   res.send("MarvelWrap backend running");
 });
 
-// Use your existing auth routes
 app.use("/api/auth", authRoutes);
 
-// Add Google OAuth routes (import the router)
-import googleAuthRoutes from "./routes/googleRoutes.js";  // <-- Add this new import
-app.use("/api/auth", googleAuthRoutes);             // <-- Add this new route
+import googleAuthRoutes from "./routes/googleRoutes.js";
+app.use("/api/auth", googleAuthRoutes);           
 
 app.use("/api/users", userRoutes);
 app.use("/api/battles", authenticateUser, battleRoutes);
-app.use("/api/quizzes", authenticateUser, quizRoutes);
+app.use("/api/quiz", authenticateUser, quizRoutes);
 app.use("/api/chats", authenticateUser, chatRoutes);
 app.use("/api/favorites", authenticateUser, favoriteRoutes);
 app.use("/api/stats", authenticateUser, statsRoutes);

@@ -1,0 +1,23 @@
+meta {
+  name: Update User
+  type: http
+  seq: 8
+}
+
+put {
+  url: http://localhost:5000/api/users/683de9ff37f86057b72d0ee3
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4M2U4Mzc2MzdmODYwNTdiNzJkMGVlNyIsImlhdCI6MTc1MDEzMjQ3OSwiZXhwIjoxNzUyNzI0NDc5fQ.ySECb0ZIsA0R0kGg-2HkHJ6G67XvNBfhSiq9Zr9mwfM
+}
+
+body:json {
+  {
+    "agentName": "Peter Jason Quill",
+    "shieldEmail": "star.lord@shield.com"
+  }
+  
+}

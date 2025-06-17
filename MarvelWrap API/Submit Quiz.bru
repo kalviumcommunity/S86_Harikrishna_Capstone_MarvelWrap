@@ -1,0 +1,28 @@
+meta {
+  name: Submit Quiz
+  type: http
+  seq: 20
+}
+
+post {
+  url: http://localhost:5000/api/quiz/submit
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4M2U4Mzc2MzdmODYwNTdiNzJkMGVlNyIsImlhdCI6MTc1MDEzMjQ3OSwiZXhwIjoxNzUyNzI0NDc5fQ.ySECb0ZIsA0R0kGg-2HkHJ6G67XvNBfhSiq9Zr9mwfM
+}
+
+body:json {
+  {
+    "questionIds": [
+      "665fbbab3e73d9d8f0c987a1",
+      "665fbbab3e73d9d8f0c987a2",
+      "665fbbab3e73d9d8f0c987a3",
+      "665fbbab3e73d9d8f0c987a4",
+      "665fbbab3e73d9d8f0c987a5"
+    ],
+    "answers": [1, 0, 2, 3, 1]
+  }
+}

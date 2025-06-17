@@ -1,0 +1,38 @@
+meta {
+  name: Create Battle
+  type: http
+  seq: 36
+}
+
+post {
+  url: http://localhost:5000/api/battles
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4M2U4Mzc2MzdmODYwNTdiNzJkMGVlNyIsImlhdCI6MTc1MDEzMjQ3OSwiZXhwIjoxNzUyNzI0NDc5fQ.ySECb0ZIsA0R0kGg-2HkHJ6G67XvNBfhSiq9Zr9mwfM
+}
+
+body:json {
+  {
+    "teamAName": "Avengers",
+    "teamBName": "Guardians",
+    "teamAIds": [
+      "665f34af9f79f6e1a55de123",
+      "665f34af9f79f6e1a55de124",
+      "665f34af9f79f6e1a55de125",
+      "665f34af9f79f6e1a55de126",
+      "665f34af9f79f6e1a55de127"
+    ],
+    "teamBIds": [
+      "665f34af9f79f6e1a55de128",
+      "665f34af9f79f6e1a55de129",
+      "665f34af9f79f6e1a55de130",
+      "665f34af9f79f6e1a55de131",
+      "665f34af9f79f6e1a55de132"
+    ],
+    "autoGenerateTeamB": false
+  }
+  
+}

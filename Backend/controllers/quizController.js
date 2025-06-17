@@ -1,74 +1,69 @@
-import Quiz from "../models/Quiz.js";
+import Question from "../models/Quiz.js";
 
-export const createQuiz = async (req, res) => {
+export const addQuestion = async (req, res) => {
   try {
-    const { title, questions } = req.body;
+    const { category, questionText, image, options, correctAnswerIndex } = req.body;
 
-    if (!title || !Array.isArray(questions) || questions.length !== 5) {
-      return res.status(400).json({ error: "Title and exactly 5 questions are required" });
+    if (!["marvel", "weapons", "characters", "movies", "comics"].includes(category)) {
+      return res.status(400).json({ error: "Invalid category" });
+    }
+    if ((!questionText?.trim() && !image?.trim()) ||
+        !Array.isArray(options) || options.length !== 4 ||
+        typeof correctAnswerIndex !== "number" || correctAnswerIndex < 0 || correctAnswerIndex > 3) {
+      return res.status(400).json({ error: "Invalid question format" });
     }
 
-    for (const q of questions) {
-      if ((!q.questionText?.trim() && !q.image?.trim())) {
-        return res.status(400).json({ error: "Each question must have text, image, or both" });
-      }
-      if (!Array.isArray(q.options) || q.options.length !== 4) {
-        return res.status(400).json({ error: "Each question must have 4 options" });
-      }
-      if (typeof q.correctAnswerIndex !== "number" || q.correctAnswerIndex < 0 || q.correctAnswerIndex > 3) {
-        return res.status(400).json({ error: "Invalid correctAnswerIndex in one of the questions" });
-      }
-    }
-
-    const newQuiz = new Quiz({
-      title,
-      questions,
+    const question = new Question({
+      category,
+      questionText,
+      image,
+      options,
+      correctAnswerIndex,
       createdBy: req.user._id,
     });
 
-    const saved = await newQuiz.save();
+    const saved = await question.save();
     res.status(201).json(saved);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to create quiz" });
+    res.status(500).json({ error: "Failed to add question" });
   }
 };
 
-export const getAllQuizzes = async (req, res) => {
+export const getRandomQuestions = async (req, res) => {
   try {
-    const quizzes = await Quiz.find().populate("createdBy", "username");
-    res.json(quizzes);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to fetch quizzes" });
-  }
-};
+    const { category } = req.params;
 
-export const getQuizById = async (req, res) => {
-  try {
-    const quiz = await Quiz.findById(req.params.id).populate("createdBy", "username");
-    if (!quiz) return res.status(404).json({ error: "Quiz not found" });
-    res.json(quiz);
+    if (!["marvel", "weapons", "characters", "movies", "comics"].includes(category)) {
+      return res.status(400).json({ error: "Invalid category" });
+    }
+
+    const questions = await Question.aggregate([
+      { $match: { category } },
+      { $sample: { size: 5 } }
+    ]);
+
+    res.json(questions);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to fetch quiz" });
+    res.status(500).json({ error: "Failed to fetch questions" });
   }
 };
 
 export const submitQuiz = async (req, res) => {
   try {
-    const { answers } = req.body;
-    const quiz = await Quiz.findById(req.params.id);
-    if (!quiz) return res.status(404).json({ error: "Quiz not found" });
+    const { questionIds, answers } = req.body;
 
-    if (!Array.isArray(answers) || answers.length !== quiz.questions.length) {
-      return res.status(400).json({ error: "Answers must match the number of questions" });
+    if (!Array.isArray(questionIds) || !Array.isArray(answers) || questionIds.length !== 5 || answers.length !== 5) {
+      return res.status(400).json({ error: "5 question IDs and answers are required" });
     }
+
+    const questions = await Question.find({ _id: { $in: questionIds } });
 
     let score = 0;
     const results = [];
 
-    quiz.questions.forEach((q, idx) => {
+    questions.forEach((q, idx) => {
       const correct = q.correctAnswerIndex === answers[idx];
       if (correct) score++;
       results.push({
@@ -81,18 +76,18 @@ export const submitQuiz = async (req, res) => {
     });
 
     let message = "";
-    if (score === 5) message = "🎉 Congratulations! You're a Marvel Master!";
-    else if (score >= 3) message = "👍 Good job! You know quite a bit!";
-    else message = "👀 Better luck next time! Keep exploring the Marvel Universe.";
+    if (score === 5) message = "🎉 You're a Marvel Master!";
+    else if (score >= 3) message = "👍 Great job!";
+    else message = "👀 Better luck next time!";
 
     res.json({
       score,
-      total: quiz.questions.length,
+      total: 5,
       message,
       results,
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to submit quiz" });
+    res.status(500).json({ error: "Quiz submission failed" });
   }
 };

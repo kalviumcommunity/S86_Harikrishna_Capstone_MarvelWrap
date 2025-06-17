@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "MW",
+  "name": "MarvelWrap API",
   "type": "collection",
   "ignore": [
     "node_modules",

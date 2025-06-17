@@ -1,0 +1,26 @@
+meta {
+  name: Create Movie
+  type: http
+  seq: 25
+}
+
+post {
+  url: http://localhost:5000/api/movies
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4M2U4Mzc2MzdmODYwNTdiNzJkMGVlNyIsImlhdCI6MTc1MDEzMjQ3OSwiZXhwIjoxNzUyNzI0NDc5fQ.ySECb0ZIsA0R0kGg-2HkHJ6G67XvNBfhSiq9Zr9mwfM
+}
+
+body:json {
+  {
+    "title": "Avengers: Endgame",
+    "releaseDate": "2019-04-26",
+    "characters": ["665cba2b5a7e59b3ae897a02", "665cba8c5a7e59b3ae897a03"],
+    "description": "After the devastating events of Infinity War, the Avengers assemble once more.",
+    "poster": "https://example.com/images/endgame.jpg"
+  }
+  
+}

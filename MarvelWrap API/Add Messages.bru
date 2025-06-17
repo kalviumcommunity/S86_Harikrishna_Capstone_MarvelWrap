@@ -1,0 +1,22 @@
+meta {
+  name: Add Messages
+  type: http
+  seq: 13
+}
+
+put {
+  url: http://localhost:5000/api/chats/6850eb7ed62ebe7dd5914c11/messages
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4M2U4Mzc2MzdmODYwNTdiNzJkMGVlNyIsImlhdCI6MTc1MDEzMjQ3OSwiZXhwIjoxNzUyNzI0NDc5fQ.ySECb0ZIsA0R0kGg-2HkHJ6G67XvNBfhSiq9Zr9mwfM
+}
+
+body:json {
+  {
+    "message": "Welcome to MarvelWrap"
+  }
+  
+}
